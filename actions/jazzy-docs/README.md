@@ -3,6 +3,7 @@ A github action for swift projects. Uses the Jazzy documentation framework to au
 
 #### Usage
 `.github/main.workflow`
+
 Replace the placeholder `[INSERT MODULE NAME HERE]` with the name of the module you need docs for
 ```
 workflow "Auto docs" {

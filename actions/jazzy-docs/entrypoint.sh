@@ -32,5 +32,6 @@ jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
 
 git status
 git add docs/* --force
+git rm .github/main.workflow
 git commit -m "Jazzy docs updated"
 git push origin gh-pages

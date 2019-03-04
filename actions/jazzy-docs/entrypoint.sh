@@ -22,12 +22,14 @@ git clone https://github.com/$GITHUB_REPOSITORY.git ./project
 
 cd project
 
+git checkout -B gh-pages
+git pull origin gh-pages
+
 swift package update
 swift build
 sourcekitten doc --spm-module $TARGET > $TARGET.json
 jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
 
-git checkout -B gh-pages
 git status
 git add . --force
 git commit -m "Jazzy docs updated"

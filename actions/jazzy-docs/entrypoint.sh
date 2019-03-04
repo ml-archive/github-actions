@@ -24,6 +24,7 @@ cd project
 
 git checkout -B gh-pages
 git pull origin gh-pages
+git merge master
 
 swift package update
 swift build

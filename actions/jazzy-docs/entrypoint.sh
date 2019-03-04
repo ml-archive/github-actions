@@ -14,7 +14,7 @@ mv .build/x86_64-unknown-linux/release/sourcekitten /usr/local/bin/
 cd $HOME
 
 rm -rf SourceKitten
-git clone $GITHUB_REPOSITORY ./project
+git clone https://github.com/$GITHUB_REPOSITORY ./project
 
 cd project
 

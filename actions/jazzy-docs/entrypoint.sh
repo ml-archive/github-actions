@@ -14,7 +14,11 @@ mv .build/x86_64-unknown-linux/release/sourcekitten /usr/local/bin/
 cd $HOME
 
 rm -rf SourceKitten
-git clone https://github.com/$GITHUB_REPOSITORY ./project
+
+git config --global user.name = "$GH_USER"
+git config --global user.email = $GH_EMAIL
+
+git clone git@github.com:$GITHUB_REPOSITORY ./project
 
 cd project
 
@@ -22,9 +26,6 @@ swift package update
 swift build
 sourcekitten doc --spm-module $TARGET > $TARGET.json
 jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
-
-git config --global user.name = "$GH_USER"
-git config --global user.email = $GH_EMAIL
 
 git checkout -B gh-pages
 git status

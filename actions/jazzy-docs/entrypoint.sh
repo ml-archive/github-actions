@@ -15,7 +15,7 @@ cd $HOME
 
 rm -rf SourceKitten
 
-git config --global user.name = "$GH_USER"
+git config --global user.name = $GH_USER
 git config --global user.email = $GH_EMAIL
 
 git clone https://github.com/$GITHUB_REPOSITORY.git ./project

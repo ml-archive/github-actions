@@ -31,6 +31,6 @@ sourcekitten doc --spm-module $TARGET > $TARGET.json
 jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
 
 git status
-git add . --force
+git add docs/* --force
 git commit -m "Jazzy docs updated"
 git push origin gh-pages

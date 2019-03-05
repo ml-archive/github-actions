@@ -2,4 +2,4 @@
 A collection of github actions
 
 #### Contents
- - [Jazzy docs](github-actions/actions/jazzy-docs/README.md)
+ - [Jazzy docs](actions/jazzy-docs/README.md)

@@ -1,0 +1,1 @@
+swift test -Xswiftc -DNOJSON

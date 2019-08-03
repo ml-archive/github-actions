@@ -1,7 +1,8 @@
-#!/bin/sh -l
-apt-get update && apt-get install -y clang libblocksruntime0 libcurl4-openssl-dev
+#!/bin/bash
+
+apt-get update && apt-get install -y clang libblocksruntime0 libcurl4-openssl-dev 
 apt-get install -y ruby-full make gcc libsqlite3-dev
-gem install jazzy
+gem install jazzy --no-ri --no-rdoc
 
 cd $HOME
 
@@ -29,11 +30,10 @@ git merge master
 swift package update
 swift build
 sourcekitten doc --spm-module $TARGET > $TARGET.json
-jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
+jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET --output .
 
 git status
-git add docs/* --force
-git add $TARGET.json
+git add --all
 git rm .github/main.workflow
 git commit -m "Jazzy docs updated"
 git push origin gh-pages

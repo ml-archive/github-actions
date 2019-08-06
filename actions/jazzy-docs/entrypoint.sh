@@ -35,5 +35,6 @@ jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET --output .
 git status
 git add --all
 git rm .github/main.workflow
+git rm -rf .circleci/
 git commit -m "Jazzy docs updated"
 git push origin gh-pages

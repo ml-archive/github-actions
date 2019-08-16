@@ -1,39 +1,24 @@
-#!/bin/sh -l
-apt-get update && apt-get install -y clang libblocksruntime0 libcurl4-openssl-dev
-apt-get install -y ruby-full make gcc libsqlite3-dev
-gem install jazzy
+#!/bin/sh
 
-cd $HOME
-
-git clone https://github.com/jpsim/SourceKitten.git ./SourceKitten
-
-cd SourceKitten
-swift build -c release --static-swift-stdlib
-mv .build/x86_64-unknown-linux/release/sourcekitten /usr/local/bin/
-
-cd $HOME
-
-rm -rf SourceKitten
-
-git config --global user.name = "Github Action"
-git config --global user.email = "action@github.com"
+git config --global user.name = "Github Actions"
+git config --global user.email = "actions@github.com"
 
 git clone https://github.com/$GITHUB_REPOSITORY.git ./project
 
 cd project
 
-git checkout -B gh-pages
-git pull origin gh-pages
-git merge master
-
-swift package update
-swift build
-sourcekitten doc --spm-module $TARGET > $TARGET.json
-jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET
-
-git status
-git add docs/* --force
-git add $TARGET.json
-git rm .github/main.workflow
-git commit -m "Jazzy docs updated"
+swift build && \
+sourcekitten doc --spm-module $TARGET > $TARGET.json && \
+jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET --output ../docs && \
+\
+git reset --hard HEAD^ && \
+git checkout -B gh-pages && \
+git pull origin gh-pages && \
+\
+mv .git ../docs && \
+cd ../docs && \
+\
+git add . && \
+\
+git commit -m "Update Jazzy docs" && \
 git push origin gh-pages

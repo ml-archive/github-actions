@@ -1,24 +1,24 @@
 #!/bin/sh
 
-git config --global user.name = "Github Actions"
-git config --global user.email = "actions@github.com"
+[ -z "$INPUT_TARGET" ] && echo "You need to specify the target in your .yml file." && exit 1;
+[ -z "$INPUT_COMMIT_MSG" ] && echo "You need to specify the commit_msg in your .yml file." && exit 1;
 
-git clone https://github.com/$GITHUB_REPOSITORY.git ./project
+set -eu;
 
-cd project
+git config --global user.name = "Github Actions";
+git config --global user.email = "actions@github.com";
+
+git checkout master;
+git worktree add --track -B gh-pages docs;
 
 swift build && \
-sourcekitten doc --spm-module $TARGET > $TARGET.json && \
-jazzy --clean --sourcekitten-sourcefile $TARGET.json --module $TARGET --output ../docs && \
-\
-git reset --hard HEAD^ && \
-git checkout -B gh-pages && \
-git pull origin gh-pages && \
-\
-mv .git ../docs && \
-cd ../docs && \
-\
-git add . && \
-\
-git commit -m "Update Jazzy docs" && \
-git push origin gh-pages
+sourcekitten doc --spm-module "$INPUT_TARGET" > "$INPUT_TARGET.json" && \
+jazzy --clean --sourcekitten-sourcefile "$INPUT_TARGET.json" --module "$INPUT_TARGET" --output tmp; 
+
+cd docs;
+ls -A | grep -vw .git | xargs rm -rf;
+cp -R ../tmp/* .;
+
+git add .;
+git commit -m "$INPUT_COMMIT_MSG";
+git push -f "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" gh-pages;

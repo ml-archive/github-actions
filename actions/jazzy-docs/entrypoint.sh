@@ -5,9 +5,6 @@
 
 set -eu;
 
-git config --global user.name = "Github Actions";
-git config --global user.email = "actions@github.com";
-
 git checkout master;
 git worktree add --track -B gh-pages docs;
 
